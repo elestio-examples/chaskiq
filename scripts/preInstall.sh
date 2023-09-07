@@ -1,18 +1,41 @@
 #set env vars
 set -o allexport; source .env; set +o allexport;
 
+cat /opt/elestio/startPostfix.sh > post.txt
+filename="./post.txt"
+
+SMTP_LOGIN=""
+SMTP_PASSWORD=""
+
+# Read the file line by line
+while IFS= read -r line; do
+  # Extract the values after the flags (-e)
+  values=$(echo "$line" | grep -o '\-e [^ ]*' | sed 's/-e //')
+
+  # Loop through each value and store in respective variables
+  while IFS= read -r value; do
+    if [[ $value == RELAYHOST_USERNAME=* ]]; then
+      SMTP_LOGIN=${value#*=}
+    elif [[ $value == RELAYHOST_PASSWORD=* ]]; then
+      SMTP_PASSWORD=${value#*=}
+    fi
+  done <<< "$values"
+
+done < "$filename"
+
+
+
+
 charset="A-Za-z0-9"
 SECRET_KEY_BASE=$(cat /dev/urandom | tr -dc "$charset" | head -c 128)
-MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-`openssl rand -hex 8`}
-MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-`openssl rand -hex 32`}
 
 cat << EOT >> ./.env
 
 SECRET_KEY_BASE=${SECRET_KEY_BASE}
-MINIO_ROOT_USER=${MINIO_ACCESS_KEY}
-MINIO_ROOT_PASSWORD=${MINIO_SECRET_KEY}
-AWS_ACCESS_KEY_ID=${MINIO_ACCESS_KEY}
-AWS_SECRET_ACCESS_KEY=${MINIO_SECRET_KEY}
+SMTP_ADDRESS=tuesday.mxrouting.net
+DEFAULT_SENDER_EMAIL=${SMTP_LOGIN}
+SMTP_USERNAME=${SMTP_LOGIN}
+SMTP_PASSWORD=${SMTP_PASSWORD}
 
 EOT
 
@@ -32,3 +55,5 @@ cat <<EOT > ./servers.json
     }
 }
 EOT
+
+rm post.txt

@@ -10,7 +10,7 @@ services:
       - ./.env
     command: bundle exec rails server -b 0.0.0.0 -p 3000
     volumes:
-      - ./storage/localstorage:/datastorage
+      - ./localstorage:/usr/src/app/localstorage
     depends_on:
       - db
       - redis
@@ -44,17 +44,6 @@ services:
     volumes:
       - "./storage/redis-data:/data"
     command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
-
-  minio:
-    image: minio/minio:latest
-    restart: always
-    dns:
-      - 8.8.8.8
-    volumes:
-      - ./storage/minio:/data
-    env_file:
-      - ./.env
-    command: server --address ":9000" --console-address ":9001" /data
 
   pgadmin4:
     image: dpage/pgadmin4:latest
