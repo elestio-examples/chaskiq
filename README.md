@@ -24,6 +24,12 @@ You can open pgAdmin web UI here:
 
 You can open Redis Insight to manage your redis instance here:
 
-    URL: https://[CI_CD_DOMAIN]:6443
+    URL: https://[CI_CD_DOMAIN]:5443
+    Login: root
+    password: [ADMIN_PASSWORD]
+
+You can open MinIO web UI here:
+
+    https://[CI_CD_DOMAIN]:4443/
     Login: root
     password: [ADMIN_PASSWORD]

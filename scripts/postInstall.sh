@@ -5,6 +5,11 @@ set -o allexport; source .env; set +o allexport;
 echo "Waiting for software to be ready ..."
 sleep 30s;
 
+docker-compose exec -T server bash -c "rails db:create"
+docker-compose exec -T server bash -c "rails db:schema:load"
+docker-compose exec -T server bash -c "rails db:seed"
+docker-compose exec -T server bash -c "rake admin_generator"
+
 
 apt install -y redis-tools
 
