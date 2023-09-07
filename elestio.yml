@@ -21,36 +21,6 @@ ports:
     targetIP: "172.17.0.1"
     targetPort: "5822"
     public: true
-  - protocol: "HTTPS"
-    targetProtocol: "HTTP"
-    listeningPort: "5443"
-    targetPort: "8461"
-    targetIP: "172.17.0.1"
-    public: true
-    path: "/"
-    isAuth: true
-    login: "root"
-    password: "random_password"
-  - protocol: "HTTPS"
-    targetProtocol: "HTTP"
-    listeningPort: "4443"
-    targetPort: "9001"
-    targetIP: "172.17.0.1"
-    public: true
-    path: "/"
-    isAuth: false
-    login: ""
-    password: ""
-  - protocol: "HTTPS"
-    targetProtocol: "HTTP"
-    listeningPort: "34266"
-    targetPort: "9000"
-    targetIP: "172.17.0.1"
-    public: true
-    path: "/"
-    isAuth: false
-    login: ""
-    password: ""
 environments:
   - key: "ADMIN_EMAIL"
     value: "[EMAIL]"
@@ -78,20 +48,20 @@ environments:
     value: "redis://:random_password@redis:6379/0"
   - key: "REDIS_INTERNAL_PORT"
     value: "6379"
-  - key: "INSIGHT_INTERNAL_IP"
-    value: "172.17.0.1"
-  - key: "INSIGHT_INTERNAL_PORT"
-    value: "8001"
-  - key: DOMAIN
+  - key: "DOMAIN"
     value: "[CI_CD_DOMAIN]"
-  - key: AWS_S3_BUCKET
+  - key: "AWS_S3_BUCKET"
     value: "chaskiq-bucket"
-  - key: AWS_S3_REGION
+  - key: "AWS_S3_REGION"
     value: "xx-xxxx-x"
-  - key: MINIO_BROWSER_REDIRECT_URL
-    value: "https://${DOMAIN}:4443"
-  - key: MINIO_SERVER_URL
-    value: "https://${DOMAIN}:34266"
+  - key: "SMTP_DELIVERY_METHOD"
+    value: "smtp"
+  - key: "DEFAULT_SENDER_EMAIL"
+    value: "[DOMAIN]@vm.elestio.app"
+  - key: "DEFAULT_OUTGOING_EMAIL_DOMAIN"
+    value: "[CI_CD_DOMAIN]"
+  - key: "SMTP_ADDRESS"
+    value: "172.17.0.1:25"
 
 config:
   runTime: "dockerCompose"
@@ -118,8 +88,4 @@ webUI:
   - url: "https://[CI_CD_DOMAIN]:6443"
     label: "PgAdmin"
     login: "[ADMIN_EMAIL]"
-    password: "[ADMIN_PASSWORD]"
-  - url: "https://[CI_CD_DOMAIN]:4443"
-    label: "MinIO Console"
-    login: "root"
     password: "[ADMIN_PASSWORD]"

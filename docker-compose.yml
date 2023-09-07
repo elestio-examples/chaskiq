@@ -48,9 +48,6 @@ services:
     restart: always
     dns:
       - 8.8.8.8
-    ports:
-      - "172.17.0.1:9000:9000"
-      - "172.17.0.1:9001:9001"
     volumes:
       - ./storage/minio:/data
     env_file:
@@ -68,15 +65,3 @@ services:
       - "172.17.0.1:8869:8080"
     volumes:
       - ./servers.json:/pgadmin4/servers.json
-
-  redisinsight:
-    image: redislabs/redisinsight:latest
-    restart: always
-    user: 0:0
-    environment:
-      - RIPROXYENABLE=true
-      - RITRUSTEDORIGINS=https://${DOMAIN}
-    ports:
-      - "172.17.0.1:8461:8001"
-    volumes:
-      - ./storage/insight:/db
