@@ -1,6 +1,10 @@
 #set env vars
 set -o allexport; source .env; set +o allexport;
 
+mkdir -p ./datastorage
+chown 1000:1000 -R ./datastorage
+chmod 777 -R ./datastorage
+
 cat /opt/elestio/startPostfix.sh > post.txt
 filename="./post.txt"
 
