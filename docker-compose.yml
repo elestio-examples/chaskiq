@@ -9,6 +9,8 @@ services:
     env_file:
       - ./.env
     command: bundle exec rails server -b 0.0.0.0 -p 3000
+    volumes:
+      - ./storage/localstorage:/datastorage
     depends_on:
       - db
       - redis
