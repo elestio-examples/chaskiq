@@ -10,7 +10,7 @@ services:
       - ./.env
     command: bundle exec rails server -b 0.0.0.0 -p 3000
     volumes:
-      - ./localstorage:/usr/src/app/localstorage
+      - ./localstorage:/usr/src/app/datastorage
     depends_on:
       - db
       - redis

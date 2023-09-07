@@ -51,7 +51,7 @@ environments:
   - key: "ACTIVE_STORAGE_SERVICE"
     value: "local"
   - key: "LOCAL_STORAGE_PATH"
-    value: "./localstorage"
+    value: "./datastorage"
   - key: "DOMAIN"
     value: "[CI_CD_DOMAIN]"
   - key: "SMTP_DELIVERY_METHOD"
