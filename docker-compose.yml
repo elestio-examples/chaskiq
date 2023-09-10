@@ -27,6 +27,7 @@ services:
 
   db:
     image: elestio/postgres:15
+    restart: always
     ports:
       - "172.17.0.1:5822:5432"
     environment:
