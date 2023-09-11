@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   server:
-    image: chaskiq/chaskiq:latest
+    image: chaskiq/chaskiq:${SOFTWARE_VERSION_TAG}
     restart: always
     ports:
       - 172.17.0.1:6734:3000
@@ -16,7 +16,7 @@ services:
       - redis
 
   worker:
-    image: chaskiq/chaskiq:latest
+    image: chaskiq/chaskiq:${SOFTWARE_VERSION_TAG}
     restart: always
     env_file:
       - ./.env
